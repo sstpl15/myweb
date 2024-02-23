@@ -1,14 +1,11 @@
-# Use a lightweight base image
+# Use a base image with a web server installed, for example, nginx
 FROM nginx:alpine
 
-# Set the working directory inside the container
-WORKDIR /usr/share/nginx/html
+# Copy the HTML files to the web server directory
+COPY . /usr/share/nginx/html
 
-# Copy the HTML, CSS, and any other assets to the container
-COPY . .
+# Expose port 8805
+EXPOSE 8805
 
-# Expose port 80 to allow external access
-EXPOSE 80
-
-# Command to start the Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+# Command to start the web server (nginx in this case) and listen on port 8805
+CMD ["nginx", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf", "-p", "/etc/nginx", "-g", "http.port=8805;"]
