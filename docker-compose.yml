@@ -1,7 +1,0 @@
-version: '3'
-
-services:
-  web:
-    image: sstpl/myweb:latest
-    ports:
-      - "80:80"
