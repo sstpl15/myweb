@@ -24,6 +24,10 @@ jobs:
           docker build -t sstpl/myweb:latest .
           docker push sstpl/myweb:latest
 
+      # Add a step to change directory to script location
+      - name: Change directory to script location
+        run: cd $GITHUB_WORKSPACE
+
       # Add a step to execute the deploy.sh script
       - name: Run deploy.sh script
         run: bash deploy.sh
