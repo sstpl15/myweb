@@ -4,4 +4,4 @@ services:
   web:
     image: sstpl/myweb:latest
     ports:
-      - "8805:8805"
+      - "80:80"

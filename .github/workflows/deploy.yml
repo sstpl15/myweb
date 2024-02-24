@@ -6,16 +6,12 @@ on:
       - main  # Adjust the branch name if needed
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Extract commit message
-        id: extract_message
-        run: echo "::set-output name=message::$(git log --format=%B -n 1 HEAD)"
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -24,9 +20,10 @@ jobs:
           password: ${{ secrets.DHUB_PASSWD }}
 
       - name: Build and push Docker image
-        env:
-          COMMIT_MESSAGE: ${{ steps.extract_message.outputs.message }}
         run: |
-          DOCKER_TAG=$(echo "$COMMIT_MESSAGE" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]' | cut -c 1-10)
-          docker build -t sstpl/myweb:$DOCKER_TAG .
-          docker push sstpl/myweb:$DOCKER_TAG
+          docker build -t sstpl/myweb:latest .
+          docker push sstpl/myweb:latest
+
+      # Add a step to execute the deploy.sh script
+      - name: Run deploy.sh script
+        run: bash deploy.sh
