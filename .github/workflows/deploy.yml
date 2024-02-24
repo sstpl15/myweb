@@ -30,7 +30,7 @@ jobs:
             docker pull sstpl/myweb:latest
 
             # Run the Docker container
-            docker run -d -p 8805:8805 sstpl/myweb:latest
+            docker run -d -p 80:80 sstpl/myweb:latest
           EOF
 
       - name: Clean up SSH key 🚀
